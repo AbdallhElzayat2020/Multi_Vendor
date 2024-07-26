@@ -20,3 +20,5 @@ Route::get('/', function () {
 
 //Route DashBoard Admin DashBoard
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
