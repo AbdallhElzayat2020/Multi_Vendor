@@ -12,19 +12,29 @@
                                 class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                 <img alt="image" src="{{asset('assets/dashboard/img/avatar/avatar-1.png')}}"
                      class="rounded-circle mr-1">
-                <div class="d-sm-none d-lg-inline-block">{{Auth::user()->name}}</div>
+                @auth()
+                    <div class="d-sm-none d-lg-inline-block">{{Auth::user()->name}}</div>
+                @endauth
+
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a href="#" class="dropdown-item has-icon">
-                    <i class="far fa-user"></i> Profile {{Auth::user()->name}}
-                </a>
+                @auth()
+                    <a href="#" class="dropdown-item has-icon">
+                        <i class="far fa-user"></i> Profile {{Auth::user()->name}}
+                    </a>
+                @endauth
+
                 <a href="" class="dropdown-item has-icon">
                     <i class="fas fa-cog"></i> Settings
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item has-icon text-danger">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
+                <form action="{{route('logout')}}" method="post">
+                    @csrf
+                    @method('post')
+                    <button type="submit" class="dropdown-item has-icon text-danger">
+                        Logout
+                    </button>
+                </form>
             </div>
         </li>
     </ul>

@@ -10,6 +10,13 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    // to check middleware auth
+//    public function __construct()
+//    {
+//        $this->middleware(['auth'])->except('index');
+//    }
+
     public function index()
     {
         return view('dashboard.index');
