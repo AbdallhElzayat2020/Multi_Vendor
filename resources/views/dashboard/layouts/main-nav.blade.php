@@ -31,6 +31,8 @@
                 <form action="{{route('logout')}}" method="post">
                     @csrf
                     @method('post')
+                    {{--                    <input type="hidden" name="_token" value="{{csrf_token()}}">--}}
+                    {{--                    {{@csrf_field()}}--}}
                     <button type="submit" class="dropdown-item has-icon text-danger">
                         Logout
                     </button>
