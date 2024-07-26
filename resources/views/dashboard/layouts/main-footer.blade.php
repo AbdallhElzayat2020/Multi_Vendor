@@ -5,6 +5,5 @@
         Design By <a href="">Abdallh Elzayat</a>
     </div>
     <div class="footer-right">
-
     </div>
 </footer>

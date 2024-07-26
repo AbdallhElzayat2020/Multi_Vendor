@@ -4,7 +4,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Home Page</h1>
+                <h4>Welcome : <span class="text-primary">{{Auth::user()->name}}</span></h4>
             </div>
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">
