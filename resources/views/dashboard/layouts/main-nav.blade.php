@@ -15,7 +15,6 @@
                 @auth()
                     <div class="d-sm-none d-lg-inline-block">{{Auth::user()->name}}</div>
                 @endauth
-
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 @auth()
@@ -23,16 +22,15 @@
                         <i class="far fa-user"></i> Profile {{Auth::user()->name}}
                     </a>
                 @endauth
-
                 <a href="" class="dropdown-item has-icon">
                     <i class="fas fa-cog"></i> Settings
                 </a>
                 <div class="dropdown-divider"></div>
                 <form action="{{route('logout')}}" method="post">
-                    @csrf
-                    @method('post')
                     {{--                    <input type="hidden" name="_token" value="{{csrf_token()}}">--}}
                     {{--                    {{@csrf_field()}}--}}
+                    @csrf
+{{--                    @method('post')--}}
                     <button type="submit" class="dropdown-item has-icon text-danger">
                         Logout
                     </button>
