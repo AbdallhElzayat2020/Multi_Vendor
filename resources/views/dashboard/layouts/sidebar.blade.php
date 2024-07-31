@@ -6,10 +6,16 @@
 
         <ul class="sidebar-menu">
             <li class="menu-header">Protfolio</li>
-            <li class="dropdown active">
+            <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
                 <ul class="dropdown-menu">
-                    <li class=active><a class="nav-link" href="index-0.html">Home</a></li>
+                    <li class=active><a class="nav-link" href="{{route('dashboard')}}">Home</a></li>
+                </ul>
+            </li>
+            <li class="dropdown ">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Categories</span></a>
+                <ul class="dropdown-menu">
+                    <li class=active><a class="nav-link" href="{{route('categories.index')}}">Categories</a></li>
                 </ul>
             </li>
         </ul>

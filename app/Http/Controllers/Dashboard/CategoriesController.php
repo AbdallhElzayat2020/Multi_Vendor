@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoriesController extends Controller
 {
@@ -22,7 +23,8 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        //
+        $parents = Category::all();
+        return view('dashboard.categories.create', compact('parents'));
     }
 
     /**
@@ -30,7 +32,14 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->merge([
+            'slug' => Str::slug($request->post('name')),
+        ]);
+
+
+        $category = new Category();
+        $category->name = $request->name;
+        $category->parent_id = $request->parent_id;
     }
 
     /**
