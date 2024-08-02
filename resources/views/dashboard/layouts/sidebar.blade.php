@@ -9,13 +9,13 @@
             <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
                 <ul class="dropdown-menu">
-                    <li class=active><a class="nav-link" href="{{route('dashboard')}}">Home</a></li>
+                    <li class=active><a class="nav-link" href="{{route('dashboard.dashboard')}}">Home</a></li>
                 </ul>
             </li>
             <li class="dropdown ">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Categories</span></a>
                 <ul class="dropdown-menu">
-                    <li class=active><a class="nav-link" href="{{route('categories.index')}}">Categories</a></li>
+                    <li class=active><a class="nav-link" href="{{route('dashboard.categories.index')}}">Categories</a></li>
                 </ul>
             </li>
         </ul>

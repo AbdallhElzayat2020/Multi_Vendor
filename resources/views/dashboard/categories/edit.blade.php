@@ -1,18 +1,22 @@
 @extends('dashboard.layouts.master')
 
-@section('title','Create Categories')
+@section('title','Edit Categories')
 
 @section('content')
 
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h4>Categories</h4>
+                <h4>Edit Categories</h4>
             </div>
         </section>
-        <form action="{{route('dashboard.categories.store')}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('dashboard.categories.update',$category->id)}}" method="post"
+              enctype="multipart/form-data">
             @csrf
+            @method('put')
+
             @include('dashboard.categories._form')
+
         </form>
 
     </div>

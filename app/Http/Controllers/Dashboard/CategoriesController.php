@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CategoriesController extends Controller
@@ -24,7 +25,8 @@ class CategoriesController extends Controller
     public function create()
     {
         $parents = Category::all();
-        return view('dashboard.categories.create', compact('parents'));
+        $category = new Category();
+        return view('dashboard.categories.create', compact('parents', 'category'));
     }
 
     /**
@@ -35,11 +37,18 @@ class CategoriesController extends Controller
         $request->merge([
             'slug' => Str::slug($request->post('name')),
         ]);
-
-
-        $category = new Category();
-        $category->name = $request->name;
-        $category->parent_id = $request->parent_id;
+        $data = $request->except('image');
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = $file->store('uploads', [
+                'disk' => 'public',
+            ]);
+//            dd($path);
+          $data['image'] = $path;
+        }
+        $category = Category::create($data);
+        return redirect()->route('dashboard.categories.index')
+            ->with('success', 'Category created successfully');
     }
 
     /**
@@ -55,7 +64,19 @@ class CategoriesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try {
+            $category = Category::findOrFail($id);
+        } catch (\Exception $e) {
+            return view('dashboard.errors.404');
+        }
+
+        $parents = Category::where('id', '<>', $id)
+            ->where(function ($query) use ($id) {
+                $query->whereNull('parent_id')
+                    ->orWhere('parent_id', '<>', $id);
+            })->get(); // عشان مش ينفع اخلي الكاتيجوري اب لنفسة
+
+        return view('dashboard.categories.edit', compact('category', 'parents'));
     }
 
     /**
@@ -63,7 +84,27 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+//        $request->merge([
+//            'slug' => Str::slug($request->post('name')),
+//        ]);
+        $category = Category::findorFail($id);
+
+        $old_image = $category->image;
+        $data = $request->except('image');
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = $file->store('uploads', [
+                'disk' => 'public',
+            ]);
+            $data['image'] = $path;
+        }
+        if ($old_image && isset($data['image'])) {
+            Storage::disk('uploads')->delete($old_image);
+
+        }
+        $category->update($request->$data);
+        return redirect()->route('dashboard.categories.index')
+            ->with('success', 'Category updated successfully');
     }
 
     /**
@@ -71,6 +112,8 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::destroy($id);
+        return redirect()->route('dashboard.categories.index')
+            ->with('success', 'Category Deleted successfully');
     }
 }

@@ -10,7 +10,7 @@
             </div>
         </section>
         <div class="mb-3">
-            <a href="{{route('categories.create')}}" class="btn btn-primary">Create New</a>
+            <a href="{{route('dashboard.categories.create')}}" class="btn btn-primary">Create New</a>
         </div>
         <table class="table">
             <thead>
@@ -18,6 +18,8 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Parent</th>
+                <th>Description</th>
+                <th>Image</th>
                 <th>Created At</th>
                 <th colspan="2">Action</th>
             </tr>
@@ -31,13 +33,14 @@
                     <td>{{$key + 1}}</td>
                     <td>{{$category->name}}</td>
                     <td>{{$category->parent_id}}</td>
-                    {{--                    <td>{{$category->image}}</td>--}}
+                    <td>{{$category->description}}</td>
+                    <td><img height="50" width="70" src="{{asset('storage/'.$category->image)}}" alt=""></td>
                     <td>{{$category->created_at}}</td>
                     <td>
-                        <a href="{{route('categories.edit',$category->id)}}" class="btn btn-sm btm-primary">Edit</a>
+                        <a href="{{route('dashboard.categories.edit',$category->id)}}" class="btn btn-sm btn-primary">Edit</a>
                     </td>
                     <td>
-                        <form action="{{route('categories.destroy',$category->id)}}" method="post">
+                        <form action="{{route('dashboard.categories.destroy',$category->id)}}" method="post">
                             @csrf
                             @method('delete')
                             {{--                            <input type="hidden" name="_method" value="delete">--}}
