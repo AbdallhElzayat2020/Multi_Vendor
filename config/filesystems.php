@@ -43,6 +43,7 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+
         'uploads' => [
             'driver' => 'local',
             'root' => storage_path('uploads'),

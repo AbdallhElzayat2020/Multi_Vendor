@@ -12,6 +12,11 @@
         <div class="mb-3">
             <a href="{{route('dashboard.categories.create')}}" class="btn btn-primary">Create New</a>
         </div>
+        @if(session()->has('success'))
+            <div class="alert alert-success">
+                {{session('success')}}
+            </div>
+        @endif
         <table class="table">
             <thead>
             <tr>
@@ -33,7 +38,7 @@
                     <td>{{$key + 1}}</td>
                     <td>{{$category->name}}</td>
                     <td>{{$category->parent_id}}</td>
-                    <td>{{$category->description}}</td>
+                    <td>{{$category->description ?? 'No Description'}}</td>
                     <td><img height="50" width="70" src="{{asset('storage/'.$category->image)}}" alt=""></td>
                     <td>{{$category->created_at}}</td>
                     <td>

@@ -44,7 +44,7 @@ class CategoriesController extends Controller
                 'disk' => 'public',
             ]);
 //            dd($path);
-          $data['image'] = $path;
+            $data['image'] = $path;
         }
         $category = Category::create($data);
         return redirect()->route('dashboard.categories.index')
@@ -99,10 +99,10 @@ class CategoriesController extends Controller
             $data['image'] = $path;
         }
         if ($old_image && isset($data['image'])) {
-            Storage::disk('uploads')->delete($old_image);
+            Storage::disk('public')->delete($old_image);
 
         }
-        $category->update($request->$data);
+        $category->update($data);
         return redirect()->route('dashboard.categories.index')
             ->with('success', 'Category updated successfully');
     }
@@ -112,7 +112,11 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Category::destroy($id);
+        $category = Category::findOrFail($id);
+        $category->delete();
+        if ($category->image) {
+            Storage::disk('public')->delete($category->image);
+        }
         return redirect()->route('dashboard.categories.index')
             ->with('success', 'Category Deleted successfully');
     }
