@@ -12,11 +12,8 @@
         <div class="mb-3">
             <a href="{{route('dashboard.categories.create')}}" class="btn btn-primary">Create New</a>
         </div>
-        @if(session()->has('success'))
-            <div class="alert alert-success">
-                {{session('success')}}
-            </div>
-        @endif
+        {{--        alert Component--}}
+        <x-alert type="success" />
         <table class="table">
             <thead>
             <tr>
