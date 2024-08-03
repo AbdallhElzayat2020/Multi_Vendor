@@ -11,14 +11,16 @@ Route::group(
         'prefix' => 'dashboard',
         'as' => 'dashboard.',
         'middleware' => ['auth', 'verified']
-    ], function () {
-    Route::resource('categories', CategoriesController::class);
+    ],
+    function () {
+        Route::resource('categories', CategoriesController::class);
 
-    Route::resource('products', CategoriesController::class);
+        Route::resource('products', CategoriesController::class);
 
-    Route::get('dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard');
-});
+        Route::get('dashboard', [DashboardController::class, 'index'])
+            ->name('dashboard');
+    }
+);
 
 
 //second Way to make RouteGroup
@@ -26,3 +28,6 @@ Route::group(
 //    Route::get('/', [DashboardController::class, 'index'])
 //        ->name('dashboard');
 //});
+
+
+

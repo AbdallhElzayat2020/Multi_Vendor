@@ -43,7 +43,7 @@ class CategoriesController extends Controller
             $path = $file->store('uploads', [
                 'disk' => 'public',
             ]);
-//            dd($path);
+            //            dd($path);
             $data['image'] = $path;
         }
         $category = Category::create($data);
@@ -84,9 +84,9 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-//        $request->merge([
-//            'slug' => Str::slug($request->post('name')),
-//        ]);
+        //        $request->merge([
+        //            'slug' => Str::slug($request->post('name')),
+        //        ]);
         $category = Category::findorFail($id);
 
         $old_image = $category->image;
@@ -100,7 +100,6 @@ class CategoriesController extends Controller
         }
         if ($old_image && isset($data['image'])) {
             Storage::disk('public')->delete($old_image);
-
         }
         $category->update($data);
         return redirect()->route('dashboard.categories.index')
