@@ -12,12 +12,11 @@
 <input type="{{$type ?? 'text'}}"
        @class(['form-control','is-valid' => $errors->has($name)])
        value="{{old('name',$value)}}"
-       id="{{$id}}" name="{{$name}}" required
+       id="{{$id}}" name="{{$name}}"
     {{$attributes->class([
-'form-control',
-'is-invalid' => $errors->has($name),
-])}}
->
+        'form-control',
+        'is-invalid' => $errors->has($name),
+])}}>
 @error($name)
 <div class="invalid-feedback">
     {{$message}}

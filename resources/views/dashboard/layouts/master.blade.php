@@ -6,7 +6,8 @@
     <div class="main-wrapper main-wrapper-1">
         <div class="navbar-bg"></div>
         @include('dashboard.layouts.main-nav')
-        @include('dashboard.layouts.sidebar')
+        <x-nav />
+{{--        @include('dashboard.layouts.sidebar')--}}
         <!-- Main Content -->
         @yield('content')
         @include('dashboard.layouts.main-footer')

@@ -1,16 +1,16 @@
 @extends('dashboard.layouts.master')
 
-@section('title','Categories')
+@section('title','products')
 
 @section('content')
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h4>Categories</h4>
+                <h4>products</h4>
             </div>
         </section>
         <div class="mb-3">
-            <a href="{{route('dashboard.categories.create')}}" class="btn btn-primary">Create New</a>
+            <a href="{{route('dashboard.products.create')}}" class="btn btn-primary">Create New</a>
         </div>
         {{--        alert Component--}}
         <form action="{{ URL::current() }}" method="get" class="d-flex justify-content-between  mb-4">
@@ -28,10 +28,10 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Parent</th>
+                <th>Category</th>
                 <th>Description</th>
+                <th>Store</th>
                 <th>status</th>
-                <th>Image</th>
                 <th>Created At</th>
                 <th colspan="2">Action</th>
             </tr>
@@ -40,20 +40,21 @@
             {{--            @if($categories->count())--}}
             {{--            @if(empty($categories))--}}
             {{--                @foreach($categories as $key=> $category)--}}
-            @forelse($categories as $key=> $category)
+            @forelse($products as $key=> $product)
                 <tr>
                     <td>{{$key + 1}}</td>
-                    <td>{{$category->name}}</td>
-                    <td>{{$category->parent_id}}</td>
-                    <td>{{$category->description ?? 'No Description'}}</td>
-                    <td>{{$category->status}}</td>
-                    <td><img height="50" width="70" src="{{asset('storage/'.$category->image)}}" alt=""></td>
-                    <td>{{$category->created_at}}</td>
+                    <td>{{$product->name}}</td>
+                    <td>{{$product->category_name}}</td>
+                    <td>{{$product->description}}</td>
+                    <td>{{$product->store}}</td>
+                    <td>{{$product->status}}</td>
+                    <td>{{$product->created_at}}</td>
                     <td>
-                        <a href="{{route('dashboard.categories.edit',$category->id)}}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{{route('dashboard.products.edit',$product->id)}}"
+                           class="btn btn-sm btn-primary">Edit</a>
                     </td>
                     <td>
-                        <form action="{{route('dashboard.categories.destroy',$category->id)}}" method="post">
+                        <form action="{{route('dashboard.products.destroy',$product->id)}}" method="post">
                             @csrf
                             @method('delete')
                             {{--                            <input type="hidden" name="_method" value="delete">--}}
@@ -63,14 +64,14 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="12">There Is No Categories</td>
+                    <td colspan="9">There Is No products</td>
                 </tr>
             @endforelse
 
             </tbody>
         </table>
         <div class="pagination">
-            {{$categories->withQueryString()->links()}}
+            {{$products->withQueryString()->links()}}
         </div>
     </div>
 @endsection
