@@ -33,7 +33,7 @@
                 <th>status</th>
                 <th>Image</th>
                 <th>Created At</th>
-                <th colspan="2">Action</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>

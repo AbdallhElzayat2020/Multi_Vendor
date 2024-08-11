@@ -44,9 +44,9 @@
                 <tr>
                     <td>{{$key + 1}}</td>
                     <td>{{$product->name}}</td>
-                    <td>{{$product->category_name}}</td>
+                    <td>{{$product->category->name}}</td>
                     <td>{{$product->description}}</td>
-                    <td>{{$product->store}}</td>
+                    <td>{{$product->store->name}}</td>
                     <td>{{$product->status}}</td>
                     <td>{{$product->created_at}}</td>
                     <td>
