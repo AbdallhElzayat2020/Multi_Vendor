@@ -18,7 +18,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 @auth()
-                    <a href="#" class="dropdown-item has-icon">
+                    <a href="{{route('dashboard.profile.edit')}}" class="dropdown-item has-icon">
                         <i class="far fa-user"></i> Profile {{Auth::user()->name}}
                     </a>
                 @endauth

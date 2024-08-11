@@ -2,6 +2,7 @@
     'name',
     'options',
     'checked'=>false,
+    'label'
 ])
 
 @foreach($options as $value => $text)
