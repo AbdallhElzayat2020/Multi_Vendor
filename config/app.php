@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -84,7 +84,7 @@ return [
     */
 
     'locale' => 'en',
-
+    'currency' => 'EUR',
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -183,7 +183,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+         'Currency' => App\Helpers\currency::class,
     ])->toArray(),
 
 ];
