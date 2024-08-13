@@ -24,4 +24,15 @@ class Product extends Model
     {
         static::addGlobalScope(new StoreScope);
     }
+
+    public function tags()
+    {
+//        return $this->belongsToMany(
+        return $this->hasMany(
+            Tag::class,
+            'product_tag',
+            'product_id',
+
+        );
+    }
 }

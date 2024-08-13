@@ -33,7 +33,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -57,7 +57,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
     }
 
     /**
