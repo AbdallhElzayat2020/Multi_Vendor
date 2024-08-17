@@ -12,7 +12,7 @@ Route::group(
     [
         'prefix' => 'dashboard',
         'as' => 'dashboard.',
-        'middleware' => ['auth', 'verified']
+        'middleware' => ['auth']
     ],
     function () {
         Route::resource('categories', CategoriesController::class);
@@ -21,8 +21,8 @@ Route::group(
 
         Route::get('dashboard', [DashboardController::class, 'index'])
             ->name('dashboard');
-        Route::get('/profile',[ProfileController::class,'edit'])->name('profile.edit');
-        Route::patch('/profile',[ProfileController::class,'update'])->name('profile.update');
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     }
 );

@@ -13,7 +13,6 @@ class CategoriesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    
     public function index()
     {
         $request = request();
