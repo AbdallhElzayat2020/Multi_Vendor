@@ -12,7 +12,7 @@ Route::group(
     [
         'prefix' => 'dashboard',
         'as' => 'dashboard.',
-        'middleware' => ['auth']
+        'middleware' => ['auth', 'admin:admin,super_admin']
     ],
     function () {
         Route::resource('categories', CategoriesController::class);
