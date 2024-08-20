@@ -4,7 +4,7 @@ namespace App\Repositories\Cart;
 
 use App\Models\Cart;
 use App\Models\Product;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -12,126 +12,66 @@ use Illuminate\Support\Str;
 
 class CartModelRepository implements CartRepository
 {
-//    get Cookie_id
-    protected function getCookieId()
+
+    protected $items;
+
+    public function __construct()
     {
-        $cookie_id = Cookie::get('cart_id');
-        if (!$cookie_id) {
-            $cookie_id = Str::uuid();
-            Cookie::queue('cart_id', $cookie_id, Carbon::now()->addDays(30));
-        }
+        $this->items = collect([]);
     }
 
     public function get(): Collection
     {
-        return Cart::where('cookie_id', '=', $this->getCookieId())->get();
+        if (!$this->items->count()) {
+            $this->items = Cart::with('product')->get();
+        }
+        return $this->items;
     }
 
     public function add(Product $product, $quantity = 1)
     {
-        Cart::create([
-            'cookie_id' => $this->getCookieId(),
-            'user_id' => Auth::id(),
-            'product_id' => $product->id,
-            'quantity' => $quantity,
-        ]);
+        $item = Cart::where('product_id', $product->id)->first();
+        if (!$item) {
+            $cart = Cart::create([
+                'cookie_id' => Cart::getCookieId(),
+                'user_id' => Auth::id(),
+                'product_id' => $product->id,
+                'quantity' => $quantity,
+            ]);
+            $this->items->push($cart);
+            return $cart;
+        }
+        return $item->increment('quantity', $quantity);
     }
 
-    public function update(Product $product, $quantity)
+    public function update($id, $quantity)
     {
-        Cart::where('product_id', $product->id)
-            ->where('cookie_id', '=', $this->getCookieId())
+        Cart::where('id', $id)
             ->update([
                 'quantity' => $quantity,
             ]);
     }
 
-    public function delete(Product $product)
+    public function delete($id)
     {
-        Cart::where('product_id', $product->id)
-            ->where('cookie_id', '=', $this->getCookieId())
-            ->delete();
+        Cart::where('id', $id)->delete();
     }
 
     public function empty()
     {
-        Cart::where('cookie_id', $this->getCookieId())->destroy();
+        Cart::query()->delete();
     }
 
-    public function total()
+    public function total(): float
     {
-//        Carts && Products
-        Cart::where('cookie_id', $this->getCookieId())
-            ->join('products', 'products.id', '=' . 'carts.product_id)')
-            ->selectRaw('SUM(products.price * carts.quantity) as total')
-            ->value('total');
-
-//        return Cart::where('cookie_id', '')
-//            ->join('products', 'products.id', '=', 'carts.product_id')
+//        join Carts && Products
+//        return (float)Cart::join('products', 'products.id', '=', 'carts.product_id')
 //            ->selectRaw('SUM(products.price * carts.quantity) as total')
 //            ->value('total');
+//        $this->get();
+        /**/
+        return $this->get()->sum(function ($item) {
+            return $item->product->price * $item->quantity;
+        });
     }
 }
-
-
-//namespace App\Repositories\Cart;
-//
-//use App\Models\Cart;
-//use App\Models\Product;
-//use Illuminate\Support\Collection;
-//use Illuminate\Support\Facades\Auth;
-//use Illuminate\Support\Facades\Cookie;
-//use Illuminate\Support\Str;
-//
-//class CartModelRepository implements CartRepository
-//{
-//    public function get(): Collection
-//    {
-//        return Cart::where('cookie_id', '')->get();
-//    }
-//
-//    public function add(Product $product, $quantity = 1)
-//    {
-//        return Cart::create([
-//            'cookie_id' => Str::uuid(),
-//            'user_id' => Auth::id(),
-//            'product_id' => $product->id,
-//            'quantity' => $quantity,
-//        ]);
-//    }
-//
-//    public function update(Product $product, $quantity)
-//    {
-//        Cart::where('product_id', '=', $product->id)
-//            ->update(['quantity' => $quantity]);
-//    }
-//
-//    public
-//    function delete(Product $product)
-//    {
-//        Cart::where('product_id', $product->id)->delete();
-//    }
-//
-//    public function empty()
-//    {
-//        Cart::where('cookie_id', '=', '')->destroy();
-//    }
-//
-//    public function total(): float
-//    {
-//        return Cart::where('cookie_id', '')
-//            ->join('products', 'products.id', 'cart.product_id')
-//            ->selectRaw('SUM(products.price * cart.quantity) as total')
-//            ->vlaue('total');
-//    }
-//
-//    protected function getCookieId()
-//    {
-//        $cookie_id = Cookie::get('cart_id'); // get cookie id
-//        if (!$cookie_id) {
-//            $cookie_id = Str::uuid();
-//            Cookie::queue('cart_id', $cookie_id, 1440); // set cookie
-//        }
-//        return $cookie_id;
-//    }
-//}
