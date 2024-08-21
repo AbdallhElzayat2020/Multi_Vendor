@@ -41,7 +41,6 @@ class CartController extends Controller
         ]);
         $product = Product::findOrFail($request->post('product_id'));
 
-
         $this->cart->add($product, $request->post('quantity'));
         return redirect()->route('cart.index')
             ->with('success', 'Product added to cart successfully');
