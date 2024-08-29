@@ -23,7 +23,10 @@ class CategoriesController extends Controller
         if ($status = $request->query('status')) {
             $query->where('status', $status);
         }
+        // $category = Category::active()->paginate(10);
+
         $categories = $query->paginate(4);
+        // $categories = $query->paginate(4);
         return view('dashboard.categories.index', compact('categories'));
     }
 
